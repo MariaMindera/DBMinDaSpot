@@ -368,8 +368,8 @@ BEGIN
 END;
 
 -- Playlist Music Update
-DROP PROCEDURE IF EXISTS add_music_from_playlist;
-CREATE PROCEDURE add_music_from_playlist (IN playlist_id_in INT, IN music_id_in INT)
+DROP PROCEDURE IF EXISTS add_music_to_playlist;
+CREATE PROCEDURE add_music_to_playlist (IN playlist_id_in INT, IN music_id_in INT)
 BEGIN
 	INSERT INTO playlist_music (playlist_id, music_id)
 		VALUES (playlist_id_in, music_id_in);
