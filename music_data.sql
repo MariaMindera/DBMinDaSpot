@@ -388,7 +388,6 @@ INSERT INTO album_music(music_id, album_id) VALUES
 
 INSERT INTO album_artist(album_id, artist_id) VALUES
 	(1, 14),
-	(23, 8),
 	(2, 2),
 	(4, 15),
 	(3, 6),
@@ -409,7 +408,8 @@ INSERT INTO album_artist(album_id, artist_id) VALUES
 	(19, 21),
 	(20, 16),
 	(21, 13),
-	(22, 15)
+	(22, 15),
+	(23, 8)
 ;
 
 INSERT INTO playlist_music (music_id, playlist_id) VALUES
