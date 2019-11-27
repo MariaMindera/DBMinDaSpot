@@ -1,0 +1,12 @@
+-- Top Chart
+DROP PROCEDURE IF EXISTS top_50;
+CREATE PROCEDURE top_50 ()
+BEGIN
+	SELECT
+		*
+	FROM
+		music
+	ORDER BY
+		nr_searchs DESC
+	LIMIT 50;
+END;
