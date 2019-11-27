@@ -26,6 +26,17 @@ BEGIN
 		album;
 END;
 
+DROP PROCEDURE IF EXISTS get_music_from_album_by_album_id;
+CREATE PROCEDURE get_music_from_album_by_album_id (IN album_id_in INTEGER)
+BEGIN
+	SELECT
+		music_id
+	FROM
+		album_music
+		WHERE
+		album_id = album_id_in;
+END;
+
 DROP PROCEDURE IF EXISTS update_album;
 CREATE PROCEDURE update_album (IN album_id_in INTEGER, IN name_in VARCHAR(100), IN year_in YEAR(4), IN studio_id_in INTEGER)
 BEGIN
@@ -71,4 +82,21 @@ BEGIN
 	CALL delete_album_album_music_by_album_id (album_id_in);
 	CALL delete_album_album_producer_by_album_id (album_id_in);
 	CALL delete_album_by_id (album_id_in);
+END;
+
+DROP PROCEDURE IF EXISTS get_all_albums_from_artist;
+CREATE PROCEDURE get_all_albums_from_artist (IN artist_id_in INT)
+BEGIN
+	SELECT
+		name, `year`, studio_id
+	FROM
+		album
+	WHERE
+		album_id = ( SELECT DISTINCT
+			album_id
+		FROM
+			album_music
+			INNER JOIN artist_music ON album_music.music_id = artist_music.artist_id
+		WHERE
+			artist_music.artist_id = 1);
 END;

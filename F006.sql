@@ -17,6 +17,17 @@ BEGIN
 		genre_id = genre_id_in;
 END;
 
+DROP PROCEDURE IF EXISTS get_musics_for_genre_by_genre_id;
+CREATE PROCEDURE get_musics_for_genre_by_genre_id (IN genre_id_in INTEGER)
+BEGIN
+	SELECT
+		name, duration, `year`, explicit, spotify_url, youtube_url, country_id, genre_id
+	FROM
+		music
+	WHERE
+		genre_id = genre_id_in;
+END;
+
 DROP PROCEDURE IF EXISTS get_all_genre;
 CREATE PROCEDURE get_all_genre ()
 BEGIN

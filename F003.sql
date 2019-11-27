@@ -26,6 +26,17 @@ BEGIN
 		playlist_id = playlist_id_in;
 END;
 
+DROP PROCEDURE IF EXISTS get_music_from_playlist_by_playlist_id;
+CREATE PROCEDURE get_music_from_playlist_by_playlist_id (IN playlist_id_in INTEGER)
+BEGIN
+	SELECT
+		music_id
+	FROM
+		playlist_music
+	WHERE
+		playlist_id = playlist_id_in;
+END;
+
 DROP PROCEDURE IF EXISTS update_Playlist;
 CREATE PROCEDURE update_Playlist (IN playlist_id_in int, IN update_playlist_name VARCHAR(50))
 BEGIN

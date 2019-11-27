@@ -1,19 +1,36 @@
 -- Filter playlists Do playlists with filters (country, genre and artists)
-DROP PROCEDURE IF EXISTS filter_music_by_country;
-CREATE PROCEDURE filter_music_by_country (IN country_id_in INTEGER)
+DROP PROCEDURE IF EXISTS filter_playlist_by_country;
+CREATE PROCEDURE filter_playlist_by_country (IN country_id_in INTEGER)
 BEGIN
-    SELECT music_id FROM music WHERE country_id=country_id_in;
+	SELECT
+		*
+	FROM
+		music
+	WHERE
+		country_id = country_id_in;
 END;
 
-DROP PROCEDURE IF EXISTS get_playlist_id_by_name;
-CREATE PROCEDURE get_playlist_id_by_name (IN name_in VARCHAR(50))
+DROP PROCEDURE IF EXISTS filter_playlist_by_genre;
+CREATE PROCEDURE filter_playlist_by_genre (IN country_id_in INTEGER)
 BEGIN
-    SELECT playlist_id FROM playlist WHERE name=name_in;
+	SELECT
+		*
+	FROM
+		music
+	WHERE
+		country_id = country_id_in;
 END;
 
-DROP PROCEDURE IF EXISTS create_playlist_by_country_id;
-CREATE PROCEDURE create_playlist_by_country_id (IN country_id_in INTEGER, IN user_id_in INTEGER, IN name_in VARCHAR(50))
+DROP PROCEDURE IF EXISTS filter_playlist_by_artist;
+CREATE PROCEDURE filter_playlist_by_artist (IN artist_id_in INTEGER)
 BEGIN
-    CALL add_Playlist(name_in, user_id_in);
-    CALL add_music_to_playlist(get_playlist_id_by_name(name_in), filter_music_by_country);
+	SELECT
+		*
+	FROM
+		music
+		INNER JOIN album_music ON music.music_id = album_music.music_id
+		INNER JOIN album_artist ON album_music.album_id = album_artist.album_id
+		INNER JOIN artist ON album_artist.artist_id = artist.artist_id
+	WHERE
+		artist.artist_id = artist_id_in;
 END;
