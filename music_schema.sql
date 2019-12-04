@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS album_music;
 DROP TABLE IF EXISTS favourite_music;
 DROP TABLE IF EXISTS playlist_music;
 DROP TABLE IF EXISTS album_artist;
+DROP TABLE IF EXISTS music_history;
 DROP TABLE IF EXISTS music;
 DROP TABLE IF EXISTS genre;
 DROP TABLE IF EXISTS album_producer;
@@ -28,6 +29,7 @@ CREATE TABLE music (
 	nr_searchs INTEGER UNSIGNED DEFAULT 0,
 	country_id INTEGER UNSIGNED,
     genre_id INTEGER UNSIGNED,
+    nr_likes INTEGER UNSIGNED DEFAULT 0,
     PRIMARY KEY (music_id)
 );
 
@@ -55,6 +57,7 @@ CREATE TABLE album(
     year YEAR(4),
     nr_searchs INTEGER UNSIGNED DEFAULT 0,
     studio_id INTEGER UNSIGNED,
+    nr_likes INTEGER UNSIGNED DEFAULT 0,
     PRIMARY KEY (album_id)
 );
 
@@ -97,6 +100,7 @@ CREATE TABLE artist(
     country_id INTEGER UNSIGNED,
     description VARCHAR(2000),
     nr_searchs INTEGER UNSIGNED DEFAULT 0,
+    nr_followers INTEGER UNSIGNED DEFAULT 0,
     PRIMARY KEY (artist_id)
 );
 
@@ -129,6 +133,14 @@ CREATE TABLE album_artist(
 );
 ALTER TABLE album_artist ADD CONSTRAINT PK_album_artist PRIMARY KEY (album_id, artist_id);
 
+CREATE TABLE music_history(
+    user_id INTEGER UNSIGNED,
+    music_id INTEGER UNSIGNED,
+    nr_plays INTEGER UNSIGNED DEFAULT 0,
+    lastTimePlayed TIMESTAMP
+);
+ALTER TABLE music_history ADD CONSTRAINT PK_music_history PRIMARY KEY (user_id, music_id);
+
 ALTER TABLE music ADD CONSTRAINT FK_music_country_id FOREIGN KEY (country_id) REFERENCES country(country_id);
 ALTER TABLE music ADD CONSTRAINT FK_music_genre_id FOREIGN KEY (genre_id) REFERENCES genre(genre_id);
 ALTER TABLE album_producer ADD CONSTRAINT FK_album_producer_album_id FOREIGN KEY (album_id) REFERENCES album(album_id);
@@ -148,3 +160,5 @@ ALTER TABLE favourite_artist ADD CONSTRAINT FK_favourite_artist_artist_id FOREIG
 ALTER TABLE favourite_artist ADD CONSTRAINT FK_favourite_artist_user_id FOREIGN KEY (user_id) REFERENCES user(user_id);
 ALTER TABLE album_artist ADD CONSTRAINT FK_album_artist_album_id FOREIGN KEY (album_id) REFERENCES album(album_id);
 ALTER TABLE album_artist ADD CONSTRAINT FK_album_artist_artist_id FOREIGN KEY (artist_id) REFERENCES artist(artist_id);
+ALTER TABLE music_history ADD CONSTRAINT FK_music_history_user_id FOREIGN KEY (user_id) REFERENCES user(user_id);
+ALTER TABLE music_history ADD CONSTRAINT FK_music_history_music_id FOREIGN KEY (music_id) REFERENCES music(music_id);
