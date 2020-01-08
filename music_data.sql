@@ -1,9 +1,10 @@
 DELETE FROM album_artist;
 DELETE FROM album_producer;
-DELETE FROM album_music;
-DELETE FROM playlist_music;
+DELETE FROM music_album;
+DELETE FROM music_playlist;
 DELETE FROM favourite_artist;
 DELETE FROM favourite_music;
+DELETE FROM favourite_album;
 DELETE FROM music_history;
 DELETE FROM playlist;
 DELETE FROM album;
@@ -27,7 +28,7 @@ ALTER TABLE user AUTO_INCREMENT = 1;
 
 INSERT INTO country (name) VALUES
   	('Portugal'),
-  	('Brazil'),
+  	('Brasil'),
   	('United States of America'),
   	('France'),
   	('Slovakia'),
@@ -63,7 +64,9 @@ INSERT INTO artist (name, country_id, description) VALUES
 ;
 
 INSERT INTO user(name, birthdate, gender, country_id, email, password) VALUES
-    ('Bruno', '2001-01-10' , 'M' , 1 , 'abc@hotmail.com' , '123'),
+	('Administrador', '2000-01-01', 'F', 1, 'a', 'a'),
+	('User', '2000-01-01', 'F', 1, 'z', 'z'),
+  ('Bruno', '2001-01-10' , 'M' , 1 , 'abc@hotmail.com' , '123'),
 	('Joana', '2001-07-14' , 'F' , 1 , 'cdf@hotmail.com' , '123'),
 	('Tiago', '2001-10-31' , 'M' , 1 , 'fgh@hotmail.com' , '123'),
 	('Maria', '2001-06-11' , 'F' , 1 , 'hij@hotmail.com' , '123'),
@@ -294,7 +297,7 @@ INSERT INTO album_producer (album_id, producer_id) VALUES
 	(23, 2)
 ;
 
-INSERT INTO album_music(music_id, album_id) VALUES 
+INSERT INTO music_album(music_id, album_id) VALUES 
 	(1, 1),
 	(2, 1),
 	(3, 1),
@@ -413,7 +416,7 @@ INSERT INTO album_artist(album_id, artist_id) VALUES
 	(23, 8)
 ;
 
-INSERT INTO playlist_music (music_id, playlist_id) VALUES
+INSERT INTO music_playlist (music_id, playlist_id) VALUES
 	(71, 1),
     (72, 1),
     (73, 1),
@@ -504,113 +507,4 @@ INSERT INTO playlist_music (music_id, playlist_id) VALUES
     (38, 9),
     (39, 9),
     (40, 9)
-;
-
-INSERT INTO favourite_artist(artist_id,user_id) VALUES
-	(13, 1),
-	(11, 1),
-	(15, 1),
-	(7, 1),
-	(8, 1),
-	(5, 9),
-	(9, 9),
-	(11, 9),
-	(15, 9),
-	(16, 9),
-	(4, 6),
-	(10, 6),
-	(17, 6),
-	(2, 2),
-	(6, 2),
-	(7, 2),
-	(1, 4),
-	(2, 4),
-	(10, 4),
-	(3, 5),
-	(4, 5),
-	(5, 5),
-	(1, 3),
-	(12, 3),
-	(18, 3),
-	(19, 3),
-	(8,8),
-	(13,8),
-	(15,8),
-	(16,8),
-	(15, 7),
-	(14, 7),
-	(13, 7)
-;
-
-INSERT INTO favourite_music(music_id,user_id) VALUES
-	(77, 1),
-	(86, 1),
-	(73, 1),
-	(85, 1),
-	(90, 1),
-	(80, 1),
-	(8, 1),
-	(33, 9),
-	(34, 9),
-	(35, 9),
-	(36, 9),
-	(47, 9),
-	(61, 9),
-	(65, 9),
-	(81, 9),
-	(85, 9),
-	(86, 9),
-	(80, 6),
-	(60, 6),
-	(53, 6),
-	(52, 6),
-	(51, 6),
-	(21, 2), 
-	(22, 2), 
-	(23, 2), 
-	(24, 2), 
-	(25, 2), 
-	(26, 2), 
-	(27, 2), 
-	(28, 2), 
-	(29, 2), 
-	(30, 2),
-	(1, 4),
-	(2, 4),
-	(3, 4),
-	(4, 4),
-	(5, 4),
-	(6, 4),
-	(7, 4),
-	(8, 4),
-	(9, 4),
-	(10, 4),
-	(30, 5), 
-	(35, 5), 
-	(36, 5), 
-	(37, 5), 
-	(38, 5), 
-	(39, 5), 
-	(40, 5), 
-	(41, 5), 
-	(42, 5), 
-	(43, 5),
-	(41, 3), 
-	(43, 3), 
-	(45, 3), 
-	(48, 3),
-	(11, 8),
-	(12, 8),
-	(13, 8),
-	(14, 8),
-	(15, 8),
-	(16, 8),
-	(17, 8),
-	(18, 8),
-	(19, 8),
-	(20, 8),
-	(18, 7),
-	(12, 7),
-	(81, 7),
-	(90, 7)
 ;
