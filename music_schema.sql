@@ -1,8 +1,7 @@
-USE mind_da_spot;
-
-DROP TABLE IF EXISTS album_music;
+DROP TABLE IF EXISTS music_album;
 DROP TABLE IF EXISTS favourite_music;
-DROP TABLE IF EXISTS playlist_music;
+DROP TABLE IF EXISTS favourite_album;
+DROP TABLE IF EXISTS music_playlist;
 DROP TABLE IF EXISTS album_artist;
 DROP TABLE IF EXISTS music_history;
 DROP TABLE IF EXISTS music;
@@ -67,11 +66,11 @@ CREATE TABLE album_producer(
 );
 ALTER TABLE album_producer ADD CONSTRAINT PK_album_producer PRIMARY KEY (album_id, producer_id);
 
-CREATE TABLE album_music(
+CREATE TABLE music_album(
     music_id INTEGER UNSIGNED,
     album_id INTEGER UNSIGNED
 );
-ALTER TABLE album_music ADD CONSTRAINT PK_album_music PRIMARY KEY (music_id, album_id);
+ALTER TABLE music_album ADD CONSTRAINT PK_music_album PRIMARY KEY (music_id, album_id);
 
 CREATE TABLE playlist(
     playlist_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -80,11 +79,11 @@ CREATE TABLE playlist(
     PRIMARY KEY (playlist_id)
 );
 
-CREATE TABLE playlist_music(
+CREATE TABLE music_playlist(
     music_id INTEGER UNSIGNED,
     playlist_id INTEGER UNSIGNED
 );
-ALTER TABLE playlist_music ADD CONSTRAINT PK_playlist_music PRIMARY KEY (music_id, playlist_id);
+ALTER TABLE music_playlist ADD CONSTRAINT PK_music_playlist PRIMARY KEY (music_id, playlist_id);
 
 CREATE TABLE studio(
     studio_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -110,7 +109,7 @@ CREATE TABLE user(
     birthdate DATE,
     gender ENUM('M', 'F'),
     country_id INTEGER UNSIGNED,
-    email VARCHAR(30) UNIQUE,
+    email VARCHAR(50) UNIQUE,
     password VARCHAR(30),
     PRIMARY KEY (user_id)
 );
@@ -120,6 +119,12 @@ CREATE TABLE favourite_music(
     user_id INTEGER UNSIGNED
 );
 ALTER TABLE favourite_music ADD CONSTRAINT PK_favourite_music PRIMARY KEY (music_id, user_id);
+
+CREATE TABLE favourite_album(
+    album_id INTEGER UNSIGNED,
+    user_id INTEGER UNSIGNED
+);
+ALTER TABLE favourite_album ADD CONSTRAINT PK_favourite_album PRIMARY KEY (album_id, user_id);
 
 CREATE TABLE favourite_artist(
     artist_id INTEGER UNSIGNED,
@@ -145,12 +150,12 @@ ALTER TABLE music ADD CONSTRAINT FK_music_country_id FOREIGN KEY (country_id) RE
 ALTER TABLE music ADD CONSTRAINT FK_music_genre_id FOREIGN KEY (genre_id) REFERENCES genre(genre_id);
 ALTER TABLE album_producer ADD CONSTRAINT FK_album_producer_album_id FOREIGN KEY (album_id) REFERENCES album(album_id);
 ALTER TABLE album_producer ADD CONSTRAINT FK_album_producer_producer_id FOREIGN KEY (producer_id) REFERENCES producer(producer_id);
-ALTER TABLE album_music ADD CONSTRAINT FK_album_music_album_id FOREIGN KEY (album_id) REFERENCES album(album_id);
-ALTER TABLE album_music ADD CONSTRAINT FK_album_music_music_id FOREIGN KEY (music_id) REFERENCES music(music_id);
+ALTER TABLE music_album ADD CONSTRAINT FK_music_album_album_id FOREIGN KEY (album_id) REFERENCES album(album_id);
+ALTER TABLE music_album ADD CONSTRAINT FK_music_music_album_id FOREIGN KEY (music_id) REFERENCES music(music_id);
 ALTER TABLE album ADD CONSTRAINT FK_album_studio_id FOREIGN KEY (studio_id) REFERENCES studio(studio_id);
 ALTER TABLE playlist ADD CONSTRAINT FK_playlist_user_id FOREIGN KEY (user_id) REFERENCES user(user_id);
-ALTER TABLE playlist_music ADD CONSTRAINT FK_playlist_music_music_id FOREIGN KEY (music_id) REFERENCES music(music_id);
-ALTER TABLE playlist_music ADD CONSTRAINT FK_playlist_music_playlist_id FOREIGN KEY (playlist_id) REFERENCES playlist(playlist_id);
+ALTER TABLE music_playlist ADD CONSTRAINT FK_music_playlist_music_id FOREIGN KEY (music_id) REFERENCES music(music_id);
+ALTER TABLE music_playlist ADD CONSTRAINT FK_music_playlist_playlist_id FOREIGN KEY (playlist_id) REFERENCES playlist(playlist_id);
 ALTER TABLE studio ADD CONSTRAINT FK_studio_country_id FOREIGN KEY (country_id) REFERENCES country(country_id);
 ALTER TABLE artist ADD CONSTRAINT FK_artist_country_id FOREIGN KEY (country_id) REFERENCES country(country_id);
 ALTER TABLE user ADD CONSTRAINT FK_user_country_id FOREIGN KEY (country_id) REFERENCES country(country_id);
@@ -158,6 +163,8 @@ ALTER TABLE favourite_music ADD CONSTRAINT FK_favourite_music_music_id FOREIGN K
 ALTER TABLE favourite_music ADD CONSTRAINT FK_favourite_music_user_id FOREIGN KEY (user_id) REFERENCES user(user_id);
 ALTER TABLE favourite_artist ADD CONSTRAINT FK_favourite_artist_artist_id FOREIGN KEY (artist_id) REFERENCES artist(artist_id);
 ALTER TABLE favourite_artist ADD CONSTRAINT FK_favourite_artist_user_id FOREIGN KEY (user_id) REFERENCES user(user_id);
+ALTER TABLE favourite_album ADD CONSTRAINT FK_favourite_album_album_id FOREIGN KEY (album_id) REFERENCES album(album_id);
+ALTER TABLE favourite_album ADD CONSTRAINT FK_favourite_album_user_id FOREIGN KEY (user_id) REFERENCES user(user_id);
 ALTER TABLE album_artist ADD CONSTRAINT FK_album_artist_album_id FOREIGN KEY (album_id) REFERENCES album(album_id);
 ALTER TABLE album_artist ADD CONSTRAINT FK_album_artist_artist_id FOREIGN KEY (artist_id) REFERENCES artist(artist_id);
 ALTER TABLE music_history ADD CONSTRAINT FK_music_history_user_id FOREIGN KEY (user_id) REFERENCES user(user_id);
